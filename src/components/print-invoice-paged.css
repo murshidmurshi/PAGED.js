@@ -1,0 +1,92 @@
+@media print {
+    .sidebar,
+    .print-button-container {
+      display: none !important;
+    }
+  
+    .main-content {
+      margin: 0 !important;
+      width: 100% !important;
+      padding: 0 !important;
+    }
+  }
+  
+  /* Main Print Area */
+  .pagedjs-print-content {
+    font-family: Calibri, sans-serif;
+    padding: 2rem;
+    color: #000;
+    background-color: #fff;
+  }
+  
+  /* Header/Footer for Paged.js */
+  .pagedjs-header {
+    position: running(header);
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1rem;
+    font-size: 16px;
+  }
+  
+  .pagedjs-footer {
+    position: running(footer);
+    text-align: center;
+    font-size: 11px;
+    border-top: 1px solid #ccc;
+    padding-top: 0.5rem;
+    color: #444;
+  }
+  
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 20mm 15mm 25mm;
+  
+    @top-center {
+      content: element(header);
+    }
+  
+    @bottom-center {
+      content: element(footer);
+    }
+  
+    @bottom-right {
+      content: "Page " counter(page) " of " counter(pages);
+      font-size: 11px;
+    }
+  }
+  
+  /* Invoice Table */
+  .invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 14px;
+  }
+  
+  .invoice-table th,
+  .invoice-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  /* Grid-style meta info */
+  .grid-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+    margin-top: 1rem;
+    font-size: 14px;
+  }
+  
+  /* Signatures */
+  .sign-section {
+    margin-top: 2rem;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
