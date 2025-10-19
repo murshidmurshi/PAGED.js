@@ -1,0 +1,344 @@
+/* Main Print Area */
+.pagedjs-print-content {
+  font-family: Calibri, sans-serif;
+  color: #000;
+  background-color: white;
+  width: 100%;
+  padding: 0rem;
+}
+.invoice-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+/* Header/Footer for Paged.js */
+
+/* Header/Footer for Paged.js - WITH FIXED DIMENSIONS */
+.pagedjs-header {
+  display: block;
+  position: running(pagedjs-header);
+  color: #000;
+  padding: 0.5rem 1.5rem;
+  padding-top: 2.5rem;
+  margin: 0;
+
+  /* Fixed header dimensions */
+  height: 90mm;
+  min-height: 90mm;
+  max-height: 90mm;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: gold !important;
+}
+/* Invoice Table */
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+  page-break-inside: auto;
+  break-inside: auto;
+}
+
+.invoice-table thead {
+  display: table-header-group !important;
+}
+
+.invoice-table tfoot {
+  display: table-footer-group !important;
+}
+
+.invoice-table tbody {
+  display: table-row-group;
+}
+
+.invoice-table th,
+.invoice-table td {
+  border: 1px solid #ccc;
+  padding: 4px;
+  vertical-align: middle;
+  font-size: 9pt;
+}
+
+/* Grid-style meta info */
+.grid-invoice-info {
+  display: grid;
+  gap: 10px;
+  font-size: 9pt;
+  margin-bottom: 0.6rem;
+  text-align: start;
+}
+
+.grid-invoice-info .grid-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  /* gap: 12px; */
+}
+
+.grid-invoice-info .address-row {
+  /* grid-template-columns: 1fr; */
+  font-size: 9pt;
+  padding-top: 3px;
+}
+
+/* Signatures */
+.sign-section {
+  display: flex;
+  flex-direction: column;
+}
+.invoice-footer-content {
+  border: 1px solid #ccc;
+  break-inside: avoid;
+}
+.terms-condition {
+  display: flex;
+  padding-left: 6px;
+  flex-direction: column;
+  border-right: 1px solid #ccc;
+}
+
+.signature {
+  padding: 6px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: start;
+  align-items: end;
+}
+.signature p {
+  font-size: 10pt;
+}
+.company-seal {
+  text-align: end;
+  padding: 6px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: end;
+  gap: 20px;
+}
+.company-seal p {
+  font-size: 10pt;
+}
+
+/* ===== Payment Information Section ===== */
+.payment-info {
+  border: 1px solid #444;
+  border-top: none; /* aligns with the block above if stacked */
+  break-inside: avoid;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 10px;
+  background-color: #fff;
+}
+
+.payment-info h6 {
+  font-size: 10pt;
+  font-weight: 600;
+  /* text-transform: uppercase; */
+  margin-bottom: 6px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 3px;
+}
+
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+}
+
+.payment-table td {
+  padding: 3px 0;
+  vertical-align: top;
+}
+
+.payment-table td:first-child {
+  width: 35%;
+  font-weight: 600;
+  color: #222;
+}
+
+.payment-table td:last-child {
+  width: 65%;
+  color: #333;
+}
+
+@media print {
+  .sidebar,
+  .print-button-container {
+    display: none !important;
+  }
+  body,
+  html {
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .appNav {
+    display: none !important;
+  }
+  .fake-footer {
+    display: none !important;
+  }
+
+  .main-content {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .sales-order-heading {
+    font-size: 10pt !important;
+  }
+
+  /* Prevent breaks that create empties */
+  .invoice-table,
+  .payment-info,
+  .invoice-footer-content,
+  .sign-section {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  .invoice-table tr:last-child {
+    page-break-after: avoid !important;
+  }
+
+  /* Allow natural page breaks inside rows */
+  .invoice-table tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    break-before: avoid;
+  }
+
+  /* Avoid page break after the entire body to prevent extra page */
+  body,
+  .pagedjs-body {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+}
+
+/* Keep it from splitting across printed pages */
+@media print {
+  .payment-info {
+    page-break-before: auto; /* or 'break-before: page;' modern syntax */
+  }
+  /* Add border to all pages */
+  .pagedjs_page {
+    box-sizing: border-box; /* Ensure padding/margin doesn't exceed page size */
+    border-radius: 4px; /* Optional: rounded corners */
+    margin: 2mm auto; /* Optional: space between page edge and border */
+  }
+}
+
+@media print {
+  /* Your existing rules... */
+
+  /* Force no break after last content; auto allows natural end */
+  .pagedjs-body::after,
+  main::after {
+    content: none !important;
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+}
+
+/* Page setup */
+@page {
+  size: A4;
+  background-color: white !important; /* Override any stray colors; remove yellow if unintended */
+  margin: 80mm 0mm 10mm 0mm; /* Match header/footer heights exactly: top=header (90mm), bottom=footer (30mm), add small side margins for bleed */
+
+  @top-center {
+    content: element(pagedjs-header);
+    background-color: transparent !important; /* Avoid color bleed on empty pages */
+  }
+
+  @bottom-center {
+    content: element(pagedjs-footer);
+    background-color: transparent !important;
+  }
+
+  /* Fallback for any residual empty pages */
+  .pagedjs_page:has(.pagedjs_body:empty) {
+    display: none !important;
+  }
+
+  .pagedjs_page:empty {
+    display: none !important;
+    background-color: blanchedalmond !important;
+  }
+
+  .pagedjs-footer::after {
+    content: 'Page ' counter(page) ' of ' counter(pages);
+    display: block;
+    font-size: 10px;
+    text-align: center;
+    color: #444;
+    /* margin-bottom: 8px;
+    margin-top: 20px; */
+  }
+
+  .pagedjs-body {
+    /* display: block; */
+    padding: 0 !important;
+    margin: 0 !important; /* Remove the double 40mm margin-top; let @page handle spacing */
+    background-color: white !important; /* Override rebeccapurple to prevent "black" (or purple) empty pages */
+    min-height: 0; /* Allow shrinking if no content */
+  }
+}
+@page {
+  .pagedjs_page:last-child:has(.pagedjs_body:empty) {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+/* Proper header sizing */
+.pagedjs-header {
+  display: block;
+  position: running(pagedjs-header);
+  color: #000;
+  padding: 0.5rem 1.5rem;
+  padding-top: 2.5rem;
+  margin: 0;
+  /* Remove fixed height for dynamic sizing */
+  height: 90mm; /* Your original fixed; or auto for flex */
+  min-height: 60mm; /* Minimum for short headers */
+  max-height: 120mm; /* Cap for very large; adjust based on your max header content */
+  box-sizing: border-box;
+  overflow: hidden; /* Clip if exceeds max */
+  background-color: white !important; /* Safe default; remove gold */
+  break-inside: avoid; /* Prevent header splitting across pages */
+}
+/* Proper footer sizing */
+.pagedjs-footer {
+  display: block;
+  position: running(pagedjs-footer);
+  height: 30mm; /* Must match @page bottom margin exactly */
+  max-height: 30mm;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 5px;
+}
+
+/* Body content area - let Paged.js calculate automatically */
+.pagedjs-body {
+  /* Do NOT set fixed heights - Paged.js calculates this */
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+/* Prevent table rows from breaking badly */
+.invoice-table tr {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* Keep sections together */
+.payment-info,
+.invoice-footer-content {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
